@@ -20,21 +20,32 @@ public interface LibroRepositorio extends JpaRepository<Libro, String> {
     
     //BUSCAR LIBRO POR ID
     @Query ("SELECT l FROM libro l WHERE l.id = :id")
-    public Libro buscarLibroPorId(@Param ("id")String id);
+    public Libro buscarPorId(@Param ("id")String id);    
     
-    //AGREGAR UN NUEVO LIBRO
-    @Query("INSERT INTO libro VALUES (:isbn, :titulo, :anio, :ejemplares, :ejemplaresPrestados, "
-            + ":ejemplaresRestantes, :alta, :autor, :editorial  ")
-    public Libro guardarLibro(@Param("isbn") Integer isbn, @Param("titulo") String titulo, @Param("anio") Integer anio, @Param("ejemplares") Integer ejemplares,
-            @Param("ejemplaresPrestados") Integer ejemplaresPrestados, @Param("ejemplaresRestantes") Integer ejemplaresRestantes, @Param("alta") Boolean alta,
-            @Param("autor") Autor autor, @Param("editorial") Editorial editorial); 
+//AGREGAR UN NUEVO LIBRO
+    //@Query("INSERT INTO libro VALUES (:isbn, :titulo, :anio, :ejemplares, :ejemplaresPrestados, "
+    //        + ":ejemplaresRestantes, :alta, :autor, :editorial  ")
+    //public Libro guardarLibro(@Param("isbn") Integer isbn, @Param("titulo") String titulo, @Param("anio") Integer anio, @Param("ejemplares") Integer ejemplares,
+    //        @Param("ejemplaresPrestados") Integer ejemplaresPrestados, @Param("ejemplaresRestantes") Integer ejemplaresRestantes, @Param("alta") Boolean alta,
+    //        @Param("autor") Autor autor, @Param("editorial") Editorial editorial); 
 
     //LISTAR TODOS LOS LIBROS
     @Query ("SELECT * FROM libro")
-    public List<Libro> listarTodosLibros();
+    public List<Libro> listarTodos();
     
     //DAR DE BAJA UN LIBRO
-    @Query ("UPDATE libro l SET l.alta = :alta WHERE l.id = id")
-    public Libro eliminarLibro (@Param("alta") Boolean alta, @Param("id") String id);
+    //@Query ("UPDATE libro l SET l.alta = :alta WHERE l.id = id")
+    //public Libro eliminarLibro (@Param("alta") Boolean alta, @Param("id") String id);
     
+    //BUSCAR LIBROS POR AUTOR
+    @Query ("SELECT l.titulo FROM libro l JOIN autor a WHERE a.nombre = :nombre")
+    public List<Libro> buscarPorAutor(@Param ("nombre")String nombre);
+    
+    //BUSCAR LIBRO POR AUTOR
+    @Query ("SELECT l.titulo FROM libro l JOIN editorial e WHERE e.nombre = :nombre")
+    public List<Libro> buscarPorEditorial(@Param ("nombre")String nombre);
+    
+    //BUSCAR LIBROs POR AÑO
+    @Query ("SELECT l FROM libro l WHERE l.anio = :anio")
+    public List<Libro> buscarPorAnio(@Param ("anio")Integer anio);
 }
