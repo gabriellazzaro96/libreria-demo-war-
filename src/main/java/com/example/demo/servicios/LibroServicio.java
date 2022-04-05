@@ -9,6 +9,8 @@ import com.example.demo.repositorios.LibroRepositorio;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LibroServicio {
@@ -17,6 +19,7 @@ public class LibroServicio {
     private LibroRepositorio libroRepositorio;
     
     //METODO PARA CARGAR UN LIBRO
+    @Transactional(propagation = Propagation.NESTED)
     public void cargar(Long isbn, String titulo, Integer anio, Integer ejemplares, 
             Integer ejemplaresPresados, Autor autor, Editorial editorial) throws ErrorServicio{
         
@@ -28,6 +31,7 @@ public class LibroServicio {
         libro.setAnio(anio);
         libro.setEjemplares(ejemplares);
         libro.setEjemplaresPrestados(ejemplaresPresados);
+        libro.setEjemplaresRestantes(ejemplares - ejemplaresPresados);
         libro.setAutor(autor);
         libro.setEditorial(editorial);
         
@@ -35,6 +39,7 @@ public class LibroServicio {
     }
     
     //METODO PARA MODIFICAR UN LIBRO
+    @Transactional(propagation = Propagation.NESTED)
     public void modificar(String id, Long isbn, String titulo, Integer anio, Integer ejemplares, 
             Integer ejemplaresPresados, Autor autor, Editorial editorial)throws ErrorServicio{
         
@@ -56,6 +61,7 @@ public class LibroServicio {
     }
     
     //METODO PARA DESHABILITAR UN LIBRO
+    @Transactional(propagation = Propagation.NESTED)
     public void deshabilitar(String id, Boolean alta)throws ErrorServicio{
         
         Optional<Libro> respuesta = libroRepositorio.findById(id);
@@ -70,6 +76,7 @@ public class LibroServicio {
     }
     
     //METODO PARA REHABILITAR UN LIBRO
+    @Transactional(propagation = Propagation.NESTED)
     public void rehabilitar(String id, Boolean alta)throws ErrorServicio{
         
         Optional<Libro> respuesta = libroRepositorio.findById(id);
@@ -82,18 +89,47 @@ public class LibroServicio {
             throw new ErrorServicio("No se encuentra el libro buscado");
         }        
     }
+     
+    //METODO PARA BUSCAR UN LIBRO POR ID
+    @Transactional(readOnly = true)
+    public void buscarPorId(String id){
+        libroRepositorio.buscarPorId(id);
+    }
     
+    //METODO ÁRA BUSCAR LIBRO POR SU TITULO
+    @Transactional(readOnly = true)
+    public void buscarPorNombre(String nombre){
+        libroRepositorio.buscarPorNombre(nombre);
+    }
+    
+    //METODO PARA BUSCAR LIBROS POR SU AUTOR
+    @Transactional(readOnly = true)
+    public void buscarPorAutor(String nombre ){
+        libroRepositorio.buscarPorAutor(nombre);
+    }
+    
+    //METODO PARA BUSCAR LIBROS POR SU EDITORIAL
+    @Transactional(readOnly = true)
+    public void buscarPorEditorial(String nombre){
+        libroRepositorio.buscarPorEditorial(nombre);
+    }
+    
+    //METODO PARA BUSCAR LIBROS POR AÑO
+    @Transactional(readOnly = true)
+    public void buscarPorAnio(Integer anio){
+        libroRepositorio.buscarPorAnio(anio);
+    }
     
     //METODO PARA VALIDAR PARAMETROS
     private void validar(Long isbn, String titulo, Integer anio, Integer ejemplares, 
             Integer ejemplaresPresados, Autor autor, Editorial editorial) throws ErrorServicio{
-        if(isbn == null){
+        if(isbn == null || isbn.toString().isEmpty()){
             throw new ErrorServicio("El ISBN no puede ser nulo");
         }
         if(titulo == null || titulo.isEmpty()){
             throw new ErrorServicio("El Titulo no puede estar vacio");
         }
-        if(anio == null){
+        if(anio == null || anio.toString().isEmpty()){
             throw new ErrorServicio("El año no puede ser nulo");
         }
         if(ejemplares == null || ejemplares<0){
@@ -102,10 +138,10 @@ public class LibroServicio {
         if(ejemplaresPresados == null || ejemplaresPresados <0){
             throw new ErrorServicio("El año no puede ser nulo o menor a cero");
         }
-        if(autor == null){
+        if(autor == null || autor.toString().trim().isEmpty()){
             throw new ErrorServicio("El Autor no puede estar vacio");
         }
-        if(editorial == null){
+        if(editorial == null || autor.toString().trim().isEmpty()){
             throw new ErrorServicio("La editorial no puede estar vacia");
         }
         
