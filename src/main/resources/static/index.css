@@ -1,0 +1,19 @@
+
+#padre {
+  position: relative;    /* para poder posicionar el texto de forma absoluta */
+  display: inline-block; /* para que solo ocupe el ancho de la imagen */
+}
+
+.card-title {
+  position: absolute;    /* posición absolute con respecto al padre */    
+  font-size: 10em;
+  text-align: center;
+  color: whitesmoke;
+  text-decoration: wavy;
+  right:12%; 
+  bottom: 60%;
+  -webkit-text-stroke: 2px black;
+  
+  
+
+}

@@ -6,7 +6,6 @@
 package com.example.demo.repositorios;
 
 import com.example.demo.entidades.Autor;
-import com.example.demo.entidades.Editorial;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,15 +16,15 @@ import org.springframework.stereotype.Repository;
 public interface AutorRepositorio extends JpaRepository<Autor, String>  {
     
     //BUSCAR AUTOR POR NOMBRE
-    @Query ("SELECT a FROM autor a WHERE a.nombre = :nombre")
-    public Autor buscarPorNombre(@Param ("nombre")String nombre);
+    @Query("SELECT a FROM Autor a WHERE a.nombre = :nombre")
+    public List<Autor> buscarPorNombre(@Param("nombre")String id);
     
     //BUSCAR AUTOR POR ID
-    @Query ("SELECT a FROM autor a WHERE a.id = :id")
-    public Autor buscarPorId(@Param ("id")String id);
+    @Query("SELECT a FROM Autor a WHERE a.id = :id")
+    public List<Autor> buscarPorId(@Param("id")String id);
     
     //LISTAR TODOS LOS AUTORES
-    @Query ("SELECT * FROM autor")
+    @Query ("SELECT a FROM Autor a")
     public List<Autor> listarTodos();
     
     //GUARDAR UN NUEVO AUTOR

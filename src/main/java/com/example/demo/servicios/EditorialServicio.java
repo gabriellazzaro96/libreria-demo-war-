@@ -1,6 +1,7 @@
 
 package com.example.demo.servicios;
 
+import com.example.demo.entidades.Autor;
 import com.example.demo.entidades.Editorial;
 import com.example.demo.errores.ErrorServicio;
 import com.example.demo.repositorios.EditorialRepositorio;
@@ -79,6 +80,20 @@ public class EditorialServicio {
     @Transactional(readOnly = true)
     public void mostrarTodas(){
         editorialRepositorio.listarTodosEditoriales();
+    }
+    
+    //METODO PARA BORRAR UNA EDITORIAL
+    @Transactional(propagation = Propagation.NESTED)
+    public void borrar(String id)throws ErrorServicio{
+        
+        Optional<Editorial> respuesta = editorialRepositorio.findById(id);
+        if(respuesta.isPresent()){
+            Editorial editorial = respuesta.get();
+            editorialRepositorio.delete(editorial);
+            
+        }else{
+            throw new ErrorServicio("No se encuentra la editorial buscado");
+        }        
     }
             
     //METODO PARA VALIDAR PARAMETROS

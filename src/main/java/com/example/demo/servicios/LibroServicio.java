@@ -96,7 +96,7 @@ public class LibroServicio {
         libroRepositorio.buscarPorId(id);
     }
     
-    //METODO ÁRA BUSCAR LIBRO POR SU TITULO
+    //METODO PARA BUSCAR LIBRO POR SU TITULO
     @Transactional(readOnly = true)
     public void buscarPorNombre(String nombre){
         libroRepositorio.buscarPorNombre(nombre);
@@ -118,6 +118,20 @@ public class LibroServicio {
     @Transactional(readOnly = true)
     public void buscarPorAnio(Integer anio){
         libroRepositorio.buscarPorAnio(anio);
+    }
+    
+    //METODO PARA BORRAR UN LIBRO
+    @Transactional(propagation = Propagation.NESTED)
+    public void borrar(String id)throws ErrorServicio{
+        
+        Optional<Libro> respuesta = libroRepositorio.findById(id);
+        if(respuesta.isPresent()){
+            Libro libro = respuesta.get();
+            libroRepositorio.delete(libro);
+            
+        }else{
+            throw new ErrorServicio("No se encuentra el libro buscado");
+        }        
     }
     
     //METODO PARA VALIDAR PARAMETROS
