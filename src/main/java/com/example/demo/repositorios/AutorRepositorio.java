@@ -24,18 +24,7 @@ public interface AutorRepositorio extends JpaRepository<Autor, String>  {
     public List<Autor> buscarPorId(@Param("id")String id);
     
     //LISTAR TODOS LOS AUTORES
-    @Query ("SELECT a FROM Autor a")
-    public List<Autor> listarTodos();
+    /*@Query ("SELECT a FROM Autor a")
+    public List<Autor> listarTodos();*/
     
-    //GUARDAR UN NUEVO AUTOR
-    //@Query ("INSERT INTO autor VALUES (:nombre, :alta)")
-    //public Autor guardarAutor (@Param("nombre") String nombre, @Param("alta") Boolean alta);// SERVIRA?
-    
-    //ACTUALIZAR NOMBRE UN AUTOR
-    //@Query ("UPDATE autor a SET a.nombre WHERE a.id = id")
-    //public Autor actualizarAutor (@Param("nombre") String nombre, @Param("id") String id);
-    
-    //DAR DE BAJA UN AUTOR
-    //@Query ("UPDATE autor a SET a.alta = :alta WHERE a.id = id")
-    //public Autor eliminarAutor (@Param("alta") Boolean alta, @Param("id") String id);
 }

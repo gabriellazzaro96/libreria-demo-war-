@@ -6,6 +6,7 @@ import com.example.demo.entidades.Editorial;
 import com.example.demo.entidades.Libro;
 import com.example.demo.errores.ErrorServicio;
 import com.example.demo.repositorios.LibroRepositorio;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,14 +18,14 @@ public class LibroServicio {
     
     @Autowired
     private LibroRepositorio libroRepositorio;
-    
+        
     //METODO PARA CARGAR UN LIBRO
     @Transactional(propagation = Propagation.NESTED)
     public void cargar(Long isbn, String titulo, Integer anio, Integer ejemplares, 
             Integer ejemplaresPresados, Autor autor, Editorial editorial) throws ErrorServicio{
-        
+                
         validar(isbn, titulo, anio, ejemplares, ejemplaresPresados, autor, editorial);
-        
+               
         Libro libro = new Libro();
         libro.setIsbn(isbn);
         libro.setTitulo(titulo);
@@ -34,6 +35,7 @@ public class LibroServicio {
         libro.setEjemplaresRestantes(ejemplares - ejemplaresPresados);
         libro.setAutor(autor);
         libro.setEditorial(editorial);
+        libro.setAlta(Boolean.TRUE);
         
         libroRepositorio.save(libro);
     }
@@ -89,11 +91,21 @@ public class LibroServicio {
             throw new ErrorServicio("No se encuentra el libro buscado");
         }        
     }
-     
-    //METODO PARA BUSCAR UN LIBRO POR ID
-    @Transactional(readOnly = true)
-    public void buscarPorId(String id){
-        libroRepositorio.buscarPorId(id);
+    
+    //METODO BUSCAR POR ID
+    @Transactional (readOnly= true)
+    public Libro buscarPorId(String id) throws ErrorServicio{
+        Optional <Libro> optional = libroRepositorio.findById(id);
+    
+    if(optional.isPresent()){        
+        return optional.get();
+    }else {
+        throw new ErrorServicio ("El autor con el id ingresado no existe");
+    }
+    }
+    
+    public Optional<Libro> buscarPorId2(String id) { //metodo para buscar por id
+        return libroRepositorio.findById(id);
     }
     
     //METODO PARA BUSCAR LIBRO POR SU TITULO
@@ -132,6 +144,12 @@ public class LibroServicio {
         }else{
             throw new ErrorServicio("No se encuentra el libro buscado");
         }        
+    }
+
+    //METODO PARA LISTAR TODOS LOS LIBROS
+    @Transactional(readOnly = true)
+    public List<Libro> listarTodos(){
+        return libroRepositorio.findAll(); 
     }
     
     //METODO PARA VALIDAR PARAMETROS

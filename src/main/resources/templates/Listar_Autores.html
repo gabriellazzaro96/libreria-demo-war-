@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -11,57 +11,37 @@
     <title>Listar Autores</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Libreria</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">Libros</a>
-                </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Autores</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">Editoriales</a>
-                </li>
-            </ul>
-          </div>
+      <div th:replace = "index::navbar">
         </div>
-      </nav>
+     
+         
     <div class="p-3 mb-2 bg-dark text-white">
         <table class="table table-dark table-striped">
             <thead>
-            <tr class="table-active">
-                <th scope="col">#</th>
+                <tr class="table-active">
+                <!--<th scope="col">#</th>-->
                 <th scope="col">Nombre</th>
+                <th scope="col">Alta</th>
                 <th scope="col">Editar Autor</th>
                 <th scope="col">Eliminar Autor</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Jorge Luis Borges</td>
-                <td><button type="button" class="btn btn-light">Editar</button></td>
-                <td><button type="button" class="btn btn-danger">Dar de baja</button></td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Julio Cortazar</td>
-                <td><button type="button" class="btn btn-light">Editar</button></td>
-                <td><button type="button" class="btn btn-danger">Dar de baja</button></td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Alfonsina Storni</td>
-                <td><button type="button" class="btn btn-light">Editar</button></td>
+            <tr th:each="Listar_Autores:${autores}">
+                <th th:text="${Listar_Autores.nombre}"></td>
+                <td th:text="${Listar_Autores.alta}"></td>
+                <!-- 
+                <td> <a th:href=@{/editar autor/{id=_${Listar_Autores.id}_}}> <button type="button" class="btn btn-outline-succes">Editar</button> </a> </td>
+                <td th:if="${Listar_Autores.alta}==false"> <a th:href=@{/altaAutor/_${Listar_Autores.id}_}> <button type="button" class="btn btn-outline-dark"> Dar de alta </button> </a> </td>
+                <td th:if="${Listar_Autores.alta}==true"> <a th:href=@{/bajaAutor/_${Listar_Autores.id}_}> <button type="button" class="btn btn-outline-dark"> Dar de baja </button> </a> </td>
+                -->        
+                                
+
+               
+                <td> 
+                     <!--<a th:href= "@{/editar/__${autor.id}__}">  --> 
+                    <a th:href= "@{/Editar_Autores/{id} (id=${Listar_Autores.id})}"> 
+                    <button type="button" class="btn btn-light"> Editar </button> </a></td>
                 <td><button type="button" class="btn btn-danger">Dar de baja</button></td>
             </tr>
             </tbody>

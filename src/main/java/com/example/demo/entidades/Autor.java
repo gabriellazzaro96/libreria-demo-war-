@@ -55,5 +55,9 @@ public class Autor {
     public String toString() {
         return "Autor{" + "id=" + id + ", nombre=" + nombre + ", alta=" + alta + '}';
     }
+
+    public Autor get() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

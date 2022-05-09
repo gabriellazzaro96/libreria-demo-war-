@@ -9,6 +9,7 @@ import com.example.demo.entidades.Autor;
 import com.example.demo.entidades.Libro;
 import com.example.demo.errores.ErrorServicio;
 import com.example.demo.repositorios.AutorRepositorio;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -86,8 +87,34 @@ public class AutorServicio {
     }
 
     //METODO PARA LISTAR TODOS LOS AUTORES
-    public void listarTodos() {
-        autorRepositorio.listarTodos();
+    @Transactional(readOnly = true)
+    public List<Autor> listarTodos() {
+        return autorRepositorio.findAll();
+    }
+    
+    //METODO PARA BUSCAR AUTOR POR ID
+//    @Transactional(readOnly = true)
+//    public <Optional>Autor buscarPorId(String id){
+//        
+//        return autorRepositorio.buscarPorId(id);
+//    }
+    
+    @Transactional (readOnly= true)
+    public Autor buscarPorId (String id) throws ErrorServicio{
+         
+    Optional <Autor> optional = autorRepositorio.findById(id);
+    
+    if(optional.isPresent()){
+        
+        return optional.get(); // con esto mostramos el autor según el id si esque está presente
+    }else {
+        throw new ErrorServicio ("El autor con el id ingresado no existe");
+    }
+         
+     }
+    
+    public Optional<Autor> buscarPorId2(String id) { //metodo para buscar por id
+        return autorRepositorio.findById(id);
     }
 
     //METODO PARA BORRAR UN AUTOR

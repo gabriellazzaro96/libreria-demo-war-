@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+        <title>Editar Autores</title>
+    </head>
+    <body>
+        <div th:replace = "index::navbar">
+        </div>
+
+        <div class="card">
+            <h1 class="card-header">Editor de Autores</h1>
+            <div class="card-body">
+                <h5 class="card-title">Edición de Autores</h5>
+                <p class="card-text">Utilice este modulo para administrar la base de datos de autores de libro.</p>
+                <a href="/Listar_Autores" class="btn btn-primary">Volver al listado</a>
+            </div>
+        </div>
+        
+        <br> 
+        <div class="mb-3 row">
+            <form action="/Editar_Autores" method="POST">              
+                <input type="hidden" class="form-control" name="id" th:value="${id}">                
+                <label for="nombre">Nombre del Autor</label>              
+                <input type="text" class="form-control" name="nombreAutor" th:value="${nombre}">
+                <br> 
+                <a class="btn btn-danger" href="/" >Volver</a>
+                <input type="submit" class="btn btn-primary" value="Guardar" />
+            </form>
+        </div>
+    </body>
+</html>

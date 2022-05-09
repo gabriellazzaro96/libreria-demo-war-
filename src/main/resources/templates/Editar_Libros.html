@@ -26,39 +26,36 @@
       
       
         <div class="mb-3 row">
-            <form action="cargarLib" method="POST">
-                <label>ISBN</label>
-                <input type="text" class="form-control" name="ISBN"/>
+            <form action="/Editar_Libros" method="POST">
+                <input type="hidden" class="form-control" name="id" th:value="${id}"/>
                 
-                <label>Titulo </label>
-                <input type="text" class="form-control" name="titulo"/>
+                <label for="isbn">ISBN</label>
+                <input type="text" class="form-control" name="isbn" th:value="${libro.isbn}/>
                 
-                <label>Año</label>
-                <input type="text" class="form-control" name="anio"/>
+                <label for="titulo">Titulo </label>
+                <input type="text" class="form-control" name="titulo" th:value="${libro.titulo}/>
                 
-                <label>Ejemplares</label>
-                <input type="text" class="form-control" name="ejemplares" />
+                <label for="anio">Año</label>
+                <input type="number" class="form-control" name="anio" th:value="${libro.anio}/>
                 
-                <label>Ejemplares Prestados</label>
-                <input type="text" class="form-control" name="ejemplaresPrestados" />
-                <!--
-                <label>Autor</label>
-                <input type="text" class="form-control" name="autor" />
+                <label for="ejemplares">Ejemplares</label>
+                <input type="number" class="form-control" name="ejemplares" th:value="${libro.ejemplares}/>
                 
-                <label>Editorial</label>
-                <input type="text" class="form-control" name="editorial" />
+                <label for="ejemplaresPrestados">Ejemplares Prestados</label>
+                <input type="number" class="form-control" name="ejemplaresPrestados" th:value="${libro.ejemplaresPrestados}/>
                 
-                <label>Autor</label>
+                      
+                <label for="autor">Autor</label>
                 <select class="form-control" name="autor" th:value="${autor}"/>
-                    <option th:each="autor : ${autores}" th:value="${autor.id}" th:text="${autor.nombre}"></option>
+                    <option th:each="autor : ${autores}" th:value="${autor.id}" th:text="${autor.nombre}" th:selected="${libro.autor != null && autor.id == libro.autor.id}"/></option>
                 </select> 
                 
-                <label>Editorial</label>
+                <label for="editorial">Editorial</label>
                 <select class="form-control" name="editorial" th:value="${editoriales}"/>
-                    <option th:each="editorial : ${editoriales}" th:value="${editorial.id}" th:text="${editorial.nombre}"></option>
+                    <option th:each="editorial : ${editoriales}" th:value="${editorial.id}" th:text="${editorial.nombre} th:selected="${libro.editorial != null && editorial.id == libro.editorial.id}"></option>
                 </select>          
                 <br>
-                -->
+   
                 <a class="btn btn-danger" href="/" >Volver</a>
                 <input type="submit" class="btn btn-primary" value="Guardar" />
             </form>

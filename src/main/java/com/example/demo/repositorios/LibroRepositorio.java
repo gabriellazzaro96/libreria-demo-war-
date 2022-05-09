@@ -38,14 +38,4 @@ public interface LibroRepositorio extends JpaRepository<Libro, String> {
     @Query ("SELECT l FROM Libro l WHERE l.anio = :anio")
     public List<Libro> buscarPorAnio(@Param ("anio")Integer anio);
     
-    //AGREGAR UN NUEVO LIBRO
-    //@Query("INSERT INTO libro VALUES (:isbn, :titulo, :anio, :ejemplares, :ejemplaresPrestados, "
-    //        + ":ejemplaresRestantes, :alta, :autor, :editorial  ")
-    //public Libro guardarLibro(@Param("isbn") Integer isbn, @Param("titulo") String titulo, @Param("anio") Integer anio, @Param("ejemplares") Integer ejemplares,
-    //        @Param("ejemplaresPrestados") Integer ejemplaresPrestados, @Param("ejemplaresRestantes") Integer ejemplaresRestantes, @Param("alta") Boolean alta,
-    //        @Param("autor") Autor autor, @Param("editorial") Editorial editorial); 
-    
-    //DAR DE BAJA UN LIBRO
-    //@Query ("UPDATE libro l SET l.alta = :alta WHERE l.id = id")
-    //public Libro eliminarLibro (@Param("alta") Boolean alta, @Param("id") String id);
 }

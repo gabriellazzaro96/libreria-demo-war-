@@ -5,6 +5,7 @@ import com.example.demo.entidades.Autor;
 import com.example.demo.entidades.Editorial;
 import com.example.demo.errores.ErrorServicio;
 import com.example.demo.repositorios.EditorialRepositorio;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -78,8 +79,8 @@ public class EditorialServicio {
     
     //METODO PARA LISTAR TODAS LAS EDITORIALES
     @Transactional(readOnly = true)
-    public void mostrarTodas(){
-        editorialRepositorio.listarTodosEditoriales();
+    public List<Editorial> mostrarTodas(){
+        return editorialRepositorio.findAll();
     }
     
     //METODO PARA BORRAR UNA EDITORIAL
@@ -94,6 +95,22 @@ public class EditorialServicio {
         }else{
             throw new ErrorServicio("No se encuentra la editorial buscado");
         }        
+    }
+    
+    //METODO BUSCAR POR ID
+    @Transactional (readOnly= true)
+    public Editorial buscarPorId(String id) throws ErrorServicio{
+        Optional <Editorial> optional = editorialRepositorio.findById(id);
+    
+    if(optional.isPresent()){        
+        return optional.get();
+    }else {
+        throw new ErrorServicio ("El autor con el id ingresado no existe");
+    }
+    }
+    
+    public Optional<Editorial> buscarPorId2(String id) { //metodo para buscar por id
+        return editorialRepositorio.findById(id);
     }
             
     //METODO PARA VALIDAR PARAMETROS
