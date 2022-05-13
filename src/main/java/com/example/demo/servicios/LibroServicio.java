@@ -64,7 +64,7 @@ public class LibroServicio {
     
     //METODO PARA DESHABILITAR UN LIBRO
     @Transactional(propagation = Propagation.NESTED)
-    public void deshabilitar(String id, Boolean alta)throws ErrorServicio{
+    public void deshabilitar(String id)throws ErrorServicio{
         
         Optional<Libro> respuesta = libroRepositorio.findById(id);
         if(respuesta.isPresent()){
@@ -79,7 +79,7 @@ public class LibroServicio {
     
     //METODO PARA REHABILITAR UN LIBRO
     @Transactional(propagation = Propagation.NESTED)
-    public void rehabilitar(String id, Boolean alta)throws ErrorServicio{
+    public void rehabilitar(String id)throws ErrorServicio{
         
         Optional<Libro> respuesta = libroRepositorio.findById(id);
         if(respuesta.isPresent()){

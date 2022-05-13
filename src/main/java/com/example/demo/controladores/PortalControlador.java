@@ -109,6 +109,32 @@ public class PortalControlador {
         return "Listar_Autores.html";
     }
     
+    @GetMapping("/altaAutor/{id}")
+    public String altaAutor(ModelMap modelo, @PathVariable String id){
+        
+        try{
+            autorServicio.rehabilitar(id);
+        }catch(ErrorServicio ex) {
+            modelo.put("error", ex.getMessage());
+            Logger.getLogger(PortalControlador.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }      
+        return "redirect:/Listar_Autores";
+    }
+    
+    @GetMapping("/bajaAutor/{id}")
+    public String bajaAutor(ModelMap modelo, @PathVariable String id){
+        
+        try{
+            autorServicio.dehabilitar(id);
+        }catch(ErrorServicio ex) {
+            modelo.put("error", ex.getMessage());
+            Logger.getLogger(PortalControlador.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }      
+        return "redirect:/Listar_Autores";
+    }
+    
     /*
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable String id, ModelMap modelo) {
@@ -187,7 +213,32 @@ public class PortalControlador {
         modelo.put("mensaje", "Editorial modificado con exito");
         return "index.html";
     } 
-     
+    
+    @GetMapping("/altaEd/{id}")
+    public String altaEd(ModelMap modelo, @PathVariable String id){
+        
+        try{
+            editorialServicio.rehabilitar(id);
+        }catch(ErrorServicio ex) {
+            modelo.put("error", ex.getMessage());
+            Logger.getLogger(PortalControlador.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }      
+        return "redirect:/Listar_Editoriales";
+    }
+    
+    @GetMapping("/bajaEd/{id}")
+    public String bajaEd(ModelMap modelo, @PathVariable String id){
+        
+        try{
+            editorialServicio.deshabilitar(id);
+        }catch(ErrorServicio ex) {
+            modelo.put("error", ex.getMessage());
+            Logger.getLogger(PortalControlador.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }      
+        return "redirect:/Listar_Editoriales";
+    }
 
     
     //--------------------------------LIBROS--------------------------------------------------------------------------
@@ -235,6 +286,7 @@ public class PortalControlador {
         modelo.addAttribute("libros", listaLibro);
         return "Listar_Libros.html";
     }
+    /*
     
     @GetMapping("/Editar_Libros/{id}")
     public String editar_Libros(RedirectAttributes redirectAttributes, @PathVariable("id") String id, ModelMap modelo){
@@ -248,7 +300,55 @@ public class PortalControlador {
             return "index.html";
         } 
     }
-    
+    */
+    @GetMapping("/Editar_Libros")
+      public String editarLibros(@RequestParam String id, ModelMap modelo) {
+
+       List<Autor> autores= autorServicio.listarTodos();
+       modelo.put("autores", autores);
+       List<Editorial> editoriales = editorialServicio.mostrarTodas();
+       modelo.put("editoriales", editoriales);
+
+       try {
+
+       Libro libro =libroServicio.buscarPorId(id);
+       modelo.addAttribute("nuevoLibro",libro); // con este como que traemos un libro, le pedimos que lo guarde y con los put accedemos a ciertos atributos del objeto
+
+       return "Editar_Libros.html";
+
+       } catch (ErrorServicio ex) {
+           Logger.getLogger(PortalControlador.class.getName()).log(Level.SEVERE, null, ex);
+           return "redirect:/Listar_Libros"; 
+       }
+      }   
+       
+    @PostMapping("/Editar_Libros")
+     public String editarLibro( ModelMap modelo,@RequestParam String id, @RequestParam(required = false) String titulo, @RequestParam (required = false) Integer anio, @RequestParam (required = false) Autor  autor, @RequestParam (required = false) Editorial editorial, Integer  ejemplares, Integer ejemplaresPrestados, Long isbn ) {
+         
+         Libro libro = null;
+            
+        try {
+            
+            libro = libroServicio.buscarPorId(id);
+            
+            libroServicio.modificar(id, isbn, titulo, anio, ejemplares, ejemplaresPrestados, autor, editorial);
+           
+            
+        } catch (ErrorServicio ex) {
+            List<Autor> autores= autorServicio.listarTodos();
+            modelo.put("autores", autores);
+            List<Editorial> editoriales = editorialServicio.mostrarTodas();
+            modelo.put("editoriales", editoriales);
+            modelo.put("error",ex.getMessage());
+            modelo.put("nuevoLibro",libro);
+            
+            
+            return "redirect:/Editar_Libros";
+        }
+        modelo.put("mensaje", "Libro modificado con éxito");
+        return "index.html";
+    }
+    /*
     @PostMapping("/Editar_Libros")
     public String editar_Libro(RedirectAttributes redirectAttributes, ModelMap modelo,@RequestParam String id, @RequestParam Long isbn, 
             @RequestParam String titulo, @RequestParam Integer anio, @RequestParam Integer ejemplares, 
@@ -273,5 +373,31 @@ public class PortalControlador {
         }
         modelo.put("mensaje", "Libro modificado con exito");
         return "index.html";
-    } 
+    }*/
+    
+    @GetMapping("/altaLib/{id}")
+    public String altaLib(ModelMap modelo, @PathVariable String id){
+        
+        try{
+            libroServicio.rehabilitar(id);
+        }catch(ErrorServicio ex) {
+            modelo.put("error", ex.getMessage());
+            Logger.getLogger(PortalControlador.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }      
+        return "redirect:/Listar_Libros";
+    }
+    
+    @GetMapping("/bajaLib/{id}")
+    public String bajaLib(ModelMap modelo, @PathVariable String id){
+        
+        try{
+            libroServicio.deshabilitar(id);
+        }catch(ErrorServicio ex) {
+            modelo.put("error", ex.getMessage());
+            Logger.getLogger(PortalControlador.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }      
+        return "redirect:/Listar_Libros";
+    }
 }

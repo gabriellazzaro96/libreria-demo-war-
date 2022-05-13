@@ -27,24 +27,17 @@
             <tbody>
             <tr th:each="Listar_Libros:${libros}">
                 <th scope="row" th:text="${Listar_Libros.titulo}"></th>
-                <td th:text="${Listar_Libros.alta}"></td>
+                <!--<td th:text="${Listar_Libros.alta}"></td>-->
+                <td th:if="${Listar_Libros.alta}==false"> <a th:href=@{/altaLib/__${Listar_Libros.id}__}> <button type="button" class="btn btn-success"> Dar de alta </button> </a> </td>
+                <td th:if="${Listar_Libros.alta}==true"> <a th:href=@{/bajaLib/__${Listar_Libros.id}__}> <button type="button" class="btn btn-danger"> Dar de baja </button> </a> </td>                              
                 <td>
-                    <a th:href= "@{/Editar_Libros/{id} (id=${Listar_Libros.id})}">
-                    <button type="button" class="btn btn-light">Editar</button></td>
-                <td><button type="button" class="btn btn-danger">Dar de baja</button></td>
+                    <a th:href="@{/Editar_Libros/ (id=${Listar_Libros.id})}">
+                    <!--<button type="button" class="btn btn-outline-success">Editar</button> </a>
+                    <a th:href= "@{/Editar_Libros/{id} (id=${Listar_Libros.id})}">-->
+                    <button type="button" class="btn btn-light">Editar</button>
+                    </td>
+                <td><button type="button" class="btn btn-outline-danger">Eliminar</button></td>
             </tr>
-            <!--<tr>
-                <th scope="row">2</th>
-                <td>El Psicoanalista</td>
-                <td><button type="button" class="btn btn-light">Editar</button></td>
-                <td><button type="button" class="btn btn-danger">Dar de baja</button></td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Romeo y Julieta</td>
-                <td><button type="button" class="btn btn-light">Editar</button></td>
-                <td><button type="button" class="btn btn-danger">Dar de baja</button></td>
-            </tr>-->
             </tbody>
         </table>
     </div>

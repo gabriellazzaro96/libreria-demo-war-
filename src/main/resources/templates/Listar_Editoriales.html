@@ -27,23 +27,17 @@
             <tbody>
             <tr th:each="Listar_Editoriales:${editoriales}">
                 <th th:text="${Listar_Editoriales.nombre}"></td>
-                <td th:text="${Listar_Editoriales.alta}"></td>
+                <!--<td th:text="${Listar_Editoriales.alta}"></td>-->
+                
+                <td th:if="${Listar_Editoriales.alta}==false"> <a th:href=@{/altaEd/__${Listar_Editoriales.id}__}> <button type="button" class="btn btn-success"> Dar de alta </button> </a> </td>
+                <td th:if="${Listar_Editoriales.alta}==true"> <a th:href=@{/bajaEd/__${Listar_Editoriales.id}__}> <button type="button" class="btn btn-danger"> Dar de baja </button> </a> </td>
+                 
+                
                 <td><a th:href= "@{/Editar_Editoriales/{id} (id=${Listar_Editoriales.id})}">
                     <button type="button" class="btn btn-light">Editar</button></td>
-                <td><button type="button" class="btn btn-danger">Dar de baja</button></td>
+                <td><button type="button" class="btn btn-outline-danger">Eliminar</button></td>
             </tr>
-            <!--<tr>
-                <th scope="row">2</th>
-                <td>Julio Cortazar</td>
-                <td><button type="button" class="btn btn-light">Editar</button></td>
-                <td><button type="button" class="btn btn-danger">Dar de baja</button></td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Alfonsina Storni</td>
-                <td><button type="button" class="btn btn-light">Editar</button></td>
-                <td><button type="button" class="btn btn-danger">Dar de baja</button></td>
-            </tr>-->
+
             </tbody>
         </table>
     </div>

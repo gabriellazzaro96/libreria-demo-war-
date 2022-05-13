@@ -29,20 +29,18 @@
             <tbody>
             <tr th:each="Listar_Autores:${autores}">
                 <th th:text="${Listar_Autores.nombre}"></td>
-                <td th:text="${Listar_Autores.alta}"></td>
-                <!-- 
-                <td> <a th:href=@{/editar autor/{id=_${Listar_Autores.id}_}}> <button type="button" class="btn btn-outline-succes">Editar</button> </a> </td>
-                <td th:if="${Listar_Autores.alta}==false"> <a th:href=@{/altaAutor/_${Listar_Autores.id}_}> <button type="button" class="btn btn-outline-dark"> Dar de alta </button> </a> </td>
-                <td th:if="${Listar_Autores.alta}==true"> <a th:href=@{/bajaAutor/_${Listar_Autores.id}_}> <button type="button" class="btn btn-outline-dark"> Dar de baja </button> </a> </td>
-                -->        
+                <!--<td th:text="${Listar_Autores.alta}"></td>-->
+                                 
+                <td th:if="${Listar_Autores.alta}==false"> <a th:href=@{/altaAutor/__${Listar_Autores.id}__}> <button type="button" class="btn btn-success"> Dar de alta </button> </a> </td>
+                <td th:if="${Listar_Autores.alta}==true"> <a th:href=@{/bajaAutor/__${Listar_Autores.id}__}> <button type="button" class="btn btn-danger"> Dar de baja </button> </a> </td>
+                        
                                 
 
                
-                <td> 
-                     <!--<a th:href= "@{/editar/__${autor.id}__}">  --> 
+                <td>              
                     <a th:href= "@{/Editar_Autores/{id} (id=${Listar_Autores.id})}"> 
                     <button type="button" class="btn btn-light"> Editar </button> </a></td>
-                <td><button type="button" class="btn btn-danger">Dar de baja</button></td>
+                <td><button type="button" class="btn btn-outline-danger">Eliminar</button></td>
             </tr>
             </tbody>
         </table>
